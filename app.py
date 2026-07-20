@@ -573,7 +573,7 @@ def render_grade_cut_box(exam_round, elective):
 
 st.set_page_config(page_title=APP_TITLE, page_icon="📝", layout="wide")
 st.title(APP_TITLE)
-st.caption("구간별 답안을 숫자로 입력하면 자동 채점됩니다.\n ①②③④⑤는 각각 1, 2, 3, 4, 5로 입력하세요.")
+st.caption("구간별 답안을 숫자로 입력하면 자동 채점됩니다. \n ①②③④⑤는 각각 1, 2, 3, 4, 5로 입력하세요.")
 
 IS_ADMIN_URL = st.query_params.get("admin") == "1"
 
