@@ -803,26 +803,28 @@ with tab_public_stats:
     st.caption("등급컷은 선택과목별로 따로 공개됩니다. 문항별 정답률도 선택과목 응시자 집단별 1~45번 전체를 기준으로 표시됩니다.")
 
     c1, c2 = st.columns(2)
+
     with c1:
         public_round = st.selectbox(
-    "회차 선택",
-    EXAM_ROUNDS,
-    format_func=format_exam_round,
-    key="public_round",
-)public_round = st.selectbox(
-    "회차 선택",
-    EXAM_ROUNDS,
-    format_func=format_exam_round,
-    key="public_round",
-)
-    with c2:
-        public_elective = st.selectbox("선택과목 선택", ELECTIVES, key="public_elective")
+            "회차 선택",
+            EXAM_ROUNDS,
+            format_func=format_exam_round,
+            key="public_round",
+        )
 
-    st.markdown(f"### {public_round} {public_elective} 등급컷")
+    with c2:
+        public_elective = st.selectbox(
+            "선택과목 선택",
+            ELECTIVES,
+            key="public_elective",
+        )
+
+    st.markdown(f"### {format_exam_round(public_round)} {public_elective} 등급컷")
     render_grade_cut_box(public_round, public_elective)
 
-    st.markdown(f"### {public_round} {public_elective} 문항별 정답률")
+    st.markdown(f"### {format_exam_round(public_round)} {public_elective} 문항별 정답률")
     public_records = fetch_all_records(exam_round=public_round, elective=public_elective)
+
     if not public_records:
         st.warning("아직 해당 선택과목의 제출 기록이 없습니다.")
     else:
