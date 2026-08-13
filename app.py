@@ -14,7 +14,25 @@ from supabase import create_client
 
 APP_TITLE = "시선모의고사 빠른 채점"
 
-EXAM_ROUNDS = ["1회", "2회", "3회"]
+# 현재 학생에게 열어 둘 회차
+# 지금은 1회만 공개하고, 나중에 2회/3회를 열 때 여기만 수정하면 됩니다.
+EXAM_ROUNDS = ["1회"]
+
+EXAM_ROUND_LABELS = {
+    "1회": "시선모의고사 1회 채점",
+    "2회": "시선모의고사 2회 채점",
+    "3회": "시선모의고사 3회 채점",
+}
+
+
+def format_exam_round(exam_round):
+    return EXAM_ROUND_LABELS.get(exam_round, exam_round)
+
+
+def format_exam_round_with_all(exam_round):
+    if exam_round == "전체":
+        return "전체"
+    return format_exam_round(exam_round)
 ELECTIVES = ["화법과작문", "언어와매체"]
 PREVIOUS_GRADES = ["입력 안 함"] + [f"{i}등급" for i in range(1, 10)]
 
@@ -594,7 +612,12 @@ with tab_submit:
         with c1:
             nickname = st.text_input("닉네임", placeholder="예: 국어황")
         with c2:
-            exam_round = st.selectbox("시험 회차", EXAM_ROUNDS, key="submit_round")
+            exam_round = st.selectbox(
+    "시험 회차",
+    EXAM_ROUNDS,
+    format_func=format_exam_round,
+    key="submit_round",
+)
         with c3:
             elective = st.radio("선택 과목", ELECTIVES, horizontal=True, key="submit_elective")
         with c4:
@@ -655,7 +678,12 @@ with tab_edit:
         with c1:
             edit_nickname = st.text_input("닉네임", placeholder="예: 국어황", key="edit_nickname")
         with c2:
-            edit_round = st.selectbox("시험 회차", EXAM_ROUNDS, key="edit_round")
+            edit_round = st.selectbox(
+    "시험 회차",
+    EXAM_ROUNDS,
+    format_func=format_exam_round,
+    key="edit_round",
+)
         with c3:
             edit_code_for_load = st.text_input("수정 비밀번호", type="password", key="edit_code_for_load")
         load_clicked = st.form_submit_button("기존 답안 불러오기")
@@ -776,7 +804,17 @@ with tab_public_stats:
 
     c1, c2 = st.columns(2)
     with c1:
-        public_round = st.selectbox("회차 선택", EXAM_ROUNDS, key="public_round")
+        public_round = st.selectbox(
+    "회차 선택",
+    EXAM_ROUNDS,
+    format_func=format_exam_round,
+    key="public_round",
+)public_round = st.selectbox(
+    "회차 선택",
+    EXAM_ROUNDS,
+    format_func=format_exam_round,
+    key="public_round",
+)
     with c2:
         public_elective = st.selectbox("선택과목 선택", ELECTIVES, key="public_elective")
 
@@ -818,7 +856,12 @@ if IS_ADMIN_URL:
                 st.markdown("### 선택과목별 등급컷 수동 입력")
                 c1, c2 = st.columns(2)
                 with c1:
-                    cut_round = st.selectbox("등급컷 입력 회차", EXAM_ROUNDS, key="admin_cut_round")
+                    cut_round = st.selectbox(
+    "등급컷 입력 회차",
+    EXAM_ROUNDS,
+    format_func=format_exam_round,
+    key="admin_cut_round",
+)
                 with c2:
                     cut_elective = st.selectbox("등급컷 입력 선택과목", ELECTIVES, key="admin_cut_elective")
 
@@ -857,7 +900,12 @@ if IS_ADMIN_URL:
 
                 f1, f2 = st.columns(2)
                 with f1:
-                    data_round = st.selectbox("회차 필터", ["전체"] + EXAM_ROUNDS, key="admin_data_round")
+                    data_round = st.selectbox(
+    "회차 필터",
+    ["전체"] + EXAM_ROUNDS,
+    format_func=format_exam_round_with_all,
+    key="admin_data_round",
+)
                 with f2:
                     data_elective = st.selectbox("선택과목 필터", ["전체"] + ELECTIVES, key="admin_data_elective")
 
@@ -925,7 +973,12 @@ if IS_ADMIN_URL:
 
                 r1, r2 = st.columns(2)
                 with r1:
-                    regrade_round = st.selectbox("재채점 회차", ["전체"] + EXAM_ROUNDS, key="regrade_round")
+                    regrade_round = st.selectbox(
+    "재채점 회차",
+    ["전체"] + EXAM_ROUNDS,
+    format_func=format_exam_round_with_all,
+    key="regrade_round",
+)
                 with r2:
                     regrade_elective = st.selectbox("재채점 선택과목", ["전체"] + ELECTIVES, key="regrade_elective")
 
