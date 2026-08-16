@@ -610,7 +610,7 @@ with tab_submit:
     with st.form("submit_form"):
         c1, c2, c3, c4 = st.columns([1.1, 0.8, 1.1, 1.2])
         with c1:
-            nickname = st.text_input("닉네임", placeholder="성적 확인 시 필요합니다.")
+            nickname = st.text_input("닉네임", placeholder="성적 확인 시 필요")
         with c2:
             exam_round = st.selectbox(
     "시험 회차",
@@ -621,7 +621,7 @@ with tab_submit:
         with c3:
             elective = st.radio("선택 과목", ELECTIVES, horizontal=True, key="submit_elective")
         with c4:
-            edit_code = st.text_input("수정 비밀번호", type="password", placeholder="답안을 수정할 때 필요")
+            edit_code = st.text_input("수정 비밀번호", type="password", placeholder="답안 수정 시 필요")
 
         previous_grade = st.selectbox(
             "최근 모의고사 국어 등급(정확한 등급컷 산출에 큰 도움이 됩니다.)",
@@ -676,7 +676,7 @@ with tab_edit:
     with st.form("load_edit_form"):
         c1, c2, c3 = st.columns([1.2, 0.8, 1.2])
         with c1:
-            edit_nickname = st.text_input("닉네임", placeholder="성적 확인 시 필요합니다.", key="edit_nickname")
+            edit_nickname = st.text_input("닉네임", placeholder="성적 확인 시 필요.", key="edit_nickname")
         with c2:
             edit_round = st.selectbox(
     "시험 회차",
@@ -770,7 +770,7 @@ with tab_edit:
 
 with tab_records:
     st.subheader("내 기록 조회")
-    search_nickname = st.text_input("조회할 닉네임", placeholder="성적 확인 시 필요합니다.", key="search_nickname")
+    search_nickname = st.text_input("조회할 닉네임", placeholder="성적 확인 시 필요", key="search_nickname")
 
     if st.button("기록 조회"):
         if not search_nickname.strip():
