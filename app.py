@@ -676,7 +676,7 @@ with tab_edit:
     with st.form("load_edit_form"):
         c1, c2, c3 = st.columns([1.2, 0.8, 1.2])
         with c1:
-            edit_nickname = st.text_input("닉네임", placeholder="성적 확인 시 필요.", key="edit_nickname")
+            edit_nickname = st.text_input("닉네임", placeholder="채점 시 입력한 닉네임", key="edit_nickname")
         with c2:
             edit_round = st.selectbox(
     "시험 회차",
@@ -770,7 +770,7 @@ with tab_edit:
 
 with tab_records:
     st.subheader("내 기록 조회")
-    search_nickname = st.text_input("조회할 닉네임", placeholder="성적 확인 시 필요", key="search_nickname")
+    search_nickname = st.text_input("조회할 닉네임", placeholder="채점 시 입력한 닉네임", key="search_nickname")
 
     if st.button("기록 조회"):
         if not search_nickname.strip():
