@@ -16,23 +16,23 @@ APP_TITLE = "시선모의고사 빠른 채점"
 
 # 현재 학생에게 열어 둘 회차
 # 지금은 1회만 공개하고, 나중에 2회/3회를 열 때 여기만 수정하면 됩니다.
-EXAM_ROUNDS = ["1회"]
+# 전체 회차 목록
+# 전체 회차와 공개 회차
+EXAM_ROUNDS = ["1회", "2회", "3회"]
+ACTIVE_EXAM_ROUNDS = ["1회", "2회"]
 
+# 사이트에 표시할 시험 이름
 EXAM_ROUND_LABELS = {
-    "1회": "2027학년도 시선모의고사 1회",
-    "2회": "2027학년도 시선모의고사 2회",
-    "3회": "2027학년도 시선모의고사 3회",
+    "1회": "2027학년도 9평 대비 시선모의고사 1회",
+    "2회": "2027학년도 수능 대비 시선모의고사 1회",
+    "3회": "2027학년도 수능 대비 시선모의고사 2회",
 }
-
 
 def format_exam_round(exam_round):
     return EXAM_ROUND_LABELS.get(exam_round, exam_round)
 
-
 def format_exam_round_with_all(exam_round):
-    if exam_round == "전체":
-        return "전체"
-    return format_exam_round(exam_round)
+    return "전체" if exam_round == "전체" else format_exam_round(exam_round)
 ELECTIVES = ["화법과작문", "언어와매체"]
 PREVIOUS_GRADES = ["입력 안 함"] + [f"{i}등급" for i in range(1, 10)]
 
@@ -103,7 +103,7 @@ ANSWER_KEYS = {
         },
         "언어와매체": {
             35: "③", 36: "④", 37: "④", 38: "⑤", 39: "③",
-            40: "⑤", 41: "③", 42: "④", 43: "①", 44: "④", 45: "⑤",
+            40: "④", 41: "③", 42: "⑤", 43: "③", 44: "①", 45: "⑤",
         },
     },
 
@@ -168,7 +168,7 @@ POINTS = {
         },
         "언어와매체": {
             35: 2, 36: 3, 37: 2, 38: 2, 39: 2,
-            40: 2, 41: 2, 42: 2, 43: 2, 44: 3, 45: 2,
+            40: 2, 41: 2, 42: 3, 43: 2, 44: 2, 45: 2,
         },
     },
 
@@ -614,7 +614,7 @@ with tab_submit:
         with c2:
             exam_round = st.selectbox(
     "시험 회차",
-    EXAM_ROUNDS,
+    ACTIVE_EXAM_ROUNDS,
     format_func=format_exam_round,
     key="submit_round",
 )
@@ -680,7 +680,7 @@ with tab_edit:
         with c2:
             edit_round = st.selectbox(
     "시험 회차",
-    EXAM_ROUNDS,
+    ACTIVE_EXAM_ROUNDS,
     format_func=format_exam_round,
     key="edit_round",
 )
@@ -807,9 +807,9 @@ with tab_public_stats:
     with c1:
         public_round = st.selectbox(
             "회차 선택",
-            EXAM_ROUNDS,
-            format_func=format_exam_round,
-            key="public_round",
+           ACTIVE_EXAM_ROUNDS,
+           format_func=format_exam_round,
+           key="public_round",
         )
 
     with c2:
